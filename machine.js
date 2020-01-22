@@ -1,8 +1,12 @@
-export function createMachine(definition) {
-  const machine = {
-    value: definition.initialState,
+export function createMachine(initialState, states) {
+  const definition = createMachineDefinition(initialState, states);
+  let value = initialState;
+  return {
+    getState() {
+      return value;
+    },
     transition(event) {
-      const { transitions, actions } = definition[machine.value];
+      const { transitions, actions } = definition[value];
       const { target, action } = transitions[event];
 
       if (!action) {
@@ -16,13 +20,11 @@ export function createMachine(definition) {
       onExit();
       onEnter();
 
-      machine.value = target;
+      value = target;
 
-      return machine.value;
+      return target;
     }
   };
-
-  return machine;
 }
 
 export const createMachineDefinition = (initialState, states) => ({
@@ -35,7 +37,7 @@ export const createActions = (onEnter = () => {}, onExit = () => {}) => ({
   onExit
 });
 
-export const createStateDefinition = (transitions, onEnter, onExit) => ({
+export const createState = (transitions, onEnter, onExit) => ({
   actions: createActions(onEnter, onExit),
   transitions
 });
