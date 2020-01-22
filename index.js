@@ -19,14 +19,18 @@ const machine = createMachine("off", {
   })
 });
 
-let state = machine.value;
+let state = machine.getState();
+console.log(state);
 updateDOM(`current state: ${state}`);
 
 state = machine.transition("switch");
+console.log(state);
 updateDOM(`current state: ${state}`);
 
 state = machine.transition("switch");
+console.log(state);
 updateDOM(`current state: ${state}`);
 
 state = machine.transition("switch");
+console.log(state);
 updateDOM(`current state: ${state}`);

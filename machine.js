@@ -22,7 +22,7 @@ export function createMachine(initialState, states) {
 
       value = target;
 
-      return target;
+      return value;
     }
   };
 }
